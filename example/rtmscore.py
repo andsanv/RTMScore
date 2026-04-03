@@ -14,8 +14,15 @@ from RTMScore.model.model2 import RTMScore, DGLGraphTransformer #LigandNet, Targ
 import torch.multiprocessing
 torch.multiprocessing.set_sharing_strategy('file_system')
 
-#you need to set the babel libdir first if you need to generate the pocket
-os.environ["BABEL_LIBDIR"] = "/home/shenchao/.conda/envs/my2/lib/openbabel/3.1.0"
+import openbabel
+ob_path = os.path.dirname(openbabel.__file__)
+_libdir = os.path.join(ob_path, "lib", "openbabel", openbabel.__version__)
+if not os.path.exists(_libdir) and os.path.exists("/opt/homebrew/lib/openbabel/3.1.0"):
+    os.environ["BABEL_LIBDIR"] = "/opt/homebrew/lib/openbabel/3.1.0"
+    os.environ["BABEL_DATADIR"] = "/opt/homebrew/share/openbabel/3.1.0"
+else:
+    os.environ["BABEL_LIBDIR"] = _libdir
+    os.environ["BABEL_DATADIR"] = os.path.join(ob_path, "share", "openbabel", openbabel.__version__)
 
 def Input():
 	p = argparse.ArgumentParser()
@@ -154,7 +161,7 @@ def main():
 	args["batch_size"] = 128
 	args["dist_threhold"] = 5
 	args['device'] = 'cuda' if th.cuda.is_available() else 'cpu'
-	args["num_workers"] = 10
+	args["num_workers"] = 8
 	args["num_node_featsp"] = 41
 	args["num_node_featsl"] = 41
 	args["num_edge_featsp"] = 5

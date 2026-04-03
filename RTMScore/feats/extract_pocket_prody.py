@@ -3,9 +3,18 @@ using prody to extract the pocket
 """
 import os, re
 import prody as pr
+import openbabel
 from openbabel import openbabel as ob
+ob_path = os.path.dirname(openbabel.__file__)
+# try using package bundle path first, but fallback to homebrew on macOS
+_libdir = os.path.join(ob_path, "lib", "openbabel", openbabel.__version__)
+if not os.path.exists(_libdir) and os.path.exists("/opt/homebrew/lib/openbabel/3.1.0"):
+    os.environ["BABEL_LIBDIR"] = "/opt/homebrew/lib/openbabel/3.1.0"
+    os.environ["BABEL_DATADIR"] = "/opt/homebrew/share/openbabel/3.1.0"
+else:
+    os.environ["BABEL_LIBDIR"] = _libdir
+    os.environ["BABEL_DATADIR"] = os.path.join(ob_path, "share", "openbabel", openbabel.__version__)
 #import subprocess
-#os.environ["BABEL_LIBDIR"] = "/home/shenchao/.conda/envs/my2/lib/openbabel/3.1.0"
 
 def write_file(output_file, outline):
 	buffer = open(output_file, 'w')

@@ -1,0 +1,19 @@
+# python env
+.venv
+
+# openbabel local install
+openbabel*/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[codz]
+*$py.class
+
+# C extensions
+*.so
+
+# output of scripts
+out.csv
+
+# MacOS 
+.DS_Store
