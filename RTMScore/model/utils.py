@@ -4,7 +4,6 @@ import numpy as np
 import random
 import torch.nn.functional as F
 from torch.distributions import Normal
-from torch_scatter import scatter_add
 from sklearn import metrics
 from sklearn.metrics import roc_auc_score, mean_squared_error, precision_recall_curve, auc
 from scipy.stats import pearsonr, spearmanr
@@ -570,7 +569,7 @@ def run_an_eval_epoch(model, data_loader, pred=False, atom_contribution=False, r
 				
 				batch = batch.to(device)
 				if pred:
-					probx = scatter_add(prob, batch, dim=0, dim_size=bgl.batch_size)
+					probx = th.zeros(bgl.batch_size, dtype=prob.dtype, device=device).scatter_add_(0, batch, prob)
 					probs.append(probx)
 				if atom_contribution or res_contribution:				
 					contribs = [prob[batch==i].reshape((bgl.batch_num_nodes()[i], bgp.batch_num_nodes()[i])) for i in range(bgl.batch_size)]
