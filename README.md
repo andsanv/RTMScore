@@ -52,8 +52,8 @@ Several optimization strategies have been tested to try and erase the gap betwee
 
 | Batch size | ONNX/C++ standard | ONNX/C++ padded | + `--opt-level all` | + dynamic batch size |
 |:---|---:|---:|---:|---:|
-| 1  | 6.71 | 6.56 | 5.25 | 6.13 |
-| 2  | 6.04 | 4.48 | 5.01 | 4.76 |
+| 1  | 5.97 | 5.46 | 5.61 | 5.39 |
+| 2  | 5.99 | 4.48 | 5.01 | 4.76 |
 | 4  | 5.44 | 4.04 | 4.50 | 4.60 |
 | 8  | 5.33 | 3.96 | 3.84 | 3.89 |
 | 16 | 5.31 | **3.82** | 4.23 | 3.87 |
