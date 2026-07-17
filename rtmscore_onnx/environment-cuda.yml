@@ -1,0 +1,17 @@
+name: rtmscore-cpp-cuda
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - cmake>=3.20
+  - ninja
+  - cxx-compiler
+  - librdkit-dev=2026.03.*
+  - libboost-devel=1.90.*
+  # The CUDA build includes the C++ headers, runtime, and CUDA provider.
+  # This environment targets Linux x86-64 with an NVIDIA driver compatible
+  # with CUDA 12.9. CUDA user-space libraries and cuDNN stay in the environment;
+  # only the kernel-level NVIDIA driver is supplied by the host.
+  - onnxruntime-cpp=1.26.*=*_cuda129
+  - cuda-runtime=12.9.*
+  - cudnn=9.*
