@@ -17,3 +17,14 @@ out.csv
 
 # MacOS 
 .DS_Store
+
+# C++ build output and generated ONNX input bundles
+rtmscore_onnx/build/*
+rtmscore_onnx/build-cuda/*
+rtmscore_onnx/fixtures/*
+
+# pure-PyTorch CLI default output
+rtmscore_pytorch/output/*
+
+# vscode env
+.vscode
